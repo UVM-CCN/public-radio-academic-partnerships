@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCN FM Contour Maps</title>
+    <link rel="icon" href="https://www.uvm.edu/themes/custom/uvm_theme/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #iframe-container {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 50;
+        }
+
+        .bg-uvm-green { background-color: #154734; }
+        .hover\:bg-uvm-green-dark:hover { background-color: #0f3a2a; }
+        .text-uvm-green { color: #154734; }
+        .fill-uvm-green { fill: #154734; }
+
+        .bg-uvm-gold { background-color: #FFD100; }
+        .hover\:bg-uvm-gold-dark:hover { background-color: #e6bb00; }
+        .text-uvm-gold { color: #FFD100; }
+
+        .bg-uvm-fog { background-color: #F7F7F7; }
+        
+        .back-button {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-uvm-fog text-gray-900">
+
+    <div id="selection-screen" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+            <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col text-center hover:shadow-2xl transition-shadow duration-300">
+                <img src="assets/map1.webp" alt="Preview of Public Radio & Academic Partnerships Map" class="w-full h-56 object-cover rounded-md mb-6 shadow-md" onerror="this.style.display='none'">
+                <h2 class="text-2xl font-bold mb-4">Public Radio & Academic Partnerships</h2>
+                <p class="text-gray-600 mb-6 flex-grow">An interactive map of broadcast contours showing the relationship between public radio stations and academic institutions.</p>
+                <button onclick="openApp('https://uvm.maps.arcgis.com/apps/instant/interactivelegend/index.html?appid=1513f644fca54f7c8fedc4b4e5efb3c5')"
+                        class="w-full bg-uvm-green text-white font-bold py-3 px-6 rounded-lg hover:bg-uvm-green-dark transition-colors duration-300 mt-auto">
+                    Map 1
+                </button>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col text-center hover:shadow-2xl transition-shadow duration-300">
+                <img src="assets/map2.webp" alt="Preview of Public Radio Station Types Map" class="w-full h-56 object-cover rounded-md mb-6 shadow-md" onerror="this.style.display='none'">
+                <h2 class="text-2xl font-bold mb-4">Public Radio Station Types</h2>
+                <p class="text-gray-600 mb-6 flex-grow">An interactive map of broadcast contours categorizing different types of public radio stations across the country.</p>
+                <button onclick="openApp('https://uvm.maps.arcgis.com/apps/instant/interactivelegend/index.html?appid=4759bbce1a124d269fd623415e6f4899')"
+                        class="w-full bg-uvm-gold text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-uvm-gold-dark transition-colors duration-300 mt-auto">
+                    Map 2
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="iframe-container" class="hidden">
+        <iframe id="app-iframe" class="w-full h-full border-0" src="" title="Selected Web App"></iframe>
+        <button onclick="closeApp()"
+                class="fixed bottom-4 left-4 text-uvm-green py-2 px-4 rounded-lg shadow-md hover:underline z-50 transition-all duration-300 flex items-center font-semibold back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 fill-uvm-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <script>
+        const selectionScreen = document.getElementById('selection-screen');
+        const iframeContainer = document.getElementById('iframe-container');
+        const appIframe = document.getElementById('app-iframe');
+
+        function openApp(url) {
+            console.log('Opening app:', url);
+            appIframe.src = url;
+            iframeContainer.classList.remove('hidden');
+            selectionScreen.classList.add('hidden');
+        }
+
+        function closeApp() {
+            console.log('Closing app');
+            iframeContainer.classList.add('hidden');
+            selectionScreen.classList.remove('hidden');
+            appIframe.src = '';
+        }
+    </script>
+
+</body>
+</html>
